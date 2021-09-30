@@ -7,8 +7,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'mattn/emmet-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
@@ -113,8 +112,9 @@ if g:colors_name == 'dracula'
   autocmd FileType yaml.ansible hi! link YamlConstant Keyword
 end
 
-let g:airline_theme = 'dracula'
-let g:airline_powerline_fonts = 1
+let g:lightline = {
+      \ 'colorscheme': 'dracula'
+      \ }
 
 " FZF mappings
 nnoremap <silent> <leader>of :Files<CR>
