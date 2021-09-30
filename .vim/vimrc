@@ -1,0 +1,171 @@
+set nocompatible
+filetype off
+
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'mattn/emmet-vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'majutsushi/tagbar'
+Plug 'godlygeek/tabular'
+"Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/fzf.vim'
+Plug 'dracula/vim'
+Plug 'sirtaj/vim-openscad'
+call plug#end()
+
+let mapleader = ","
+let g:mapleader = ","
+
+set encoding=utf8
+set ffs=unix,dos,mac
+
+set rtp+=~/.fzf
+set hidden
+
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+set listchars=tab:>.,trail:.,extends:#,nbsp:.,eol:$
+
+set relativenumber
+set ruler
+
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set nocindent
+set autoindent
+set smartindent
+set nowrap
+
+set tw=79
+set cc=+1
+
+if has('signcolumn')
+  set signcolumn=yes
+endif
+
+set history=700
+set scrolloff=3
+set cmdheight=2
+set laststatus=2
+set updatetime=300
+set shortmess+=c
+
+set splitbelow
+set splitright
+
+set wildmenu
+set wildmode=list:longest
+set wildignore=*.o,*~,*.pyc,node_modules/
+
+set magic
+set showmatch
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+set nobackup
+set nowritebackup
+set nowb
+set noswapfile
+
+autocmd FileType ruby,javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd FileType java,python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+autocmd FileType javscript,typescript,json setlocal tw=120
+autocmd FileType go setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+
+autocmd BufNewFile,BufRead *.handlebars,*.html.erb setlocal filetype=html
+autocmd BufNewFile,BufRead *.ldif.j2 setlocal filetype=ldif.jinja2
+autocmd BufNewFile,BufRead *.ino setlocal filetype=c
+autocmd BufNewFile,BufRead *.ui setlocal filetype=xml.ui foldmethod=marker
+autocmd BufNewFile,BufRead *.gjs setlocal filetype=javascript
+
+"autocmd BufWritePre *.go :call CocAction('editor.action.organizeImport')
+
+nmap <silent> <leader>n :nohlsearch<cr>
+nmap <silent> <leader>s :set list!<cr>
+
+" Theme
+if has("termguicolors")
+  set termguicolors
+endif
+
+set background=dark
+colorscheme dracula
+
+if g:colors_name == 'dracula'
+  " Identifiers are not special in dracula theme, so assign them a different
+  " color for certain file types.
+  autocmd FileType yaml hi! link Identifier DraculaGreen
+  autocmd FileType yaml.ansible hi! link YamlConstant Keyword
+end
+
+let g:airline_theme = 'dracula'
+let g:airline_powerline_fonts = 1
+
+" FZF mappings
+nnoremap <silent> <leader>of :Files<CR>
+nnoremap <silent> <leader>ob :Buffers<CR>
+
+" coc.nvim settings
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gtd <Plug>(coc-type-definition)
+nmap <silent> <leader>gi <Plug>(coc-implentation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim', 'help'], &filetype) >= 0)
+    execute 'h ' . expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>ra <Plug>(coc-format)
+nmap <leader>ro :call CocAction('runCommand', 'editor.action.organizeImport')<CR>
+xmap <leader>rf <Plug>(coc-format-selected)
+nmap <leader>rf <Plug>(coc-format-selected)
+
+function! s:tab_completion()
+  let info = complete_info(['pum_visible', 'items', 'selected'])
+
+  if info.pum_visible && (info.selected >= 0 || len(info.items) == 1)
+    return "\<C-y>"
+  endif
+
+  "if pumvisible()
+  "  if !empty(v:completed_item)
+  "    " Accept the menu item if one is selected
+  "    return "\<C-y>"
+  "  endif
+  "endif
+
+  if coc#expandableOrJumpable()
+    " If the word at the cursor is expandable, then expand it
+    return "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump', ''])\<CR>"
+  end
+
+  return "\<C-g>u\<TAB>"
+endfunction
+
+inoremap <silent><expr> <TAB> <SID>tab_completion()
