@@ -1,9 +1,16 @@
 {
-  "suggest.enablePreview": true,
-  "suggest.floatEnable": true,
-  "suggest.enablePreselect": true,
-  "suggest.noselect": true,
+  "coc.preferences.rootPatterns": {
+    "setup.py",
+    ".git",
+    ".hg",
+    ".projections.json"
+  },
+
   "suggest.triggerAfterInsertEnter": true,
+  "suggest.noselect": true,
+  "suggest.enablePreview": true,
+  "suggest.enablePreselect": true,
+  "suggest.floatEnable": true,
   "suggest.completionItemKindLabels": {
 		"keyword": "\uf1de",
 		"variable": "\ue79b",
@@ -42,6 +49,6 @@
   "snippets.textmateSnippetsRoots": ["~/.vim/snippets"],
 
   "clangd.enabled": false,
-	"clangd.path": "/usr/bin/clangd-10",
-	"clangd.compilationDatabasePath": ".",
+  "clangd.path": "/usr/bin/clangd-10",
+  "clangd.compilationDatabasePath": "."
 }

@@ -2,7 +2,6 @@ set nocompatible
 filetype off
 
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -13,7 +12,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 "Plug 'sheerun/vim-polyglot'
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'dracula/vim'
 Plug 'sirtaj/vim-openscad'
 call plug#end()
@@ -35,12 +35,10 @@ set relativenumber
 set ruler
 
 set expandtab
-set tabstop=2
+set tabstop=8
 set softtabstop=2
 set shiftwidth=2
-set nocindent
 set autoindent
-set smartindent
 set nowrap
 
 set tw=79
@@ -84,15 +82,13 @@ set noswapfile
 autocmd FileType ruby,javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd FileType java,python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 autocmd FileType javscript,typescript,json setlocal tw=120
-autocmd FileType go setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+autocmd FileType go setlocal tabstop=4 softtabstop=4 shiftwidth=0 noexpandtab
 
 autocmd BufNewFile,BufRead *.handlebars,*.html.erb setlocal filetype=html
 autocmd BufNewFile,BufRead *.ldif.j2 setlocal filetype=ldif.jinja2
 autocmd BufNewFile,BufRead *.ino setlocal filetype=c
 autocmd BufNewFile,BufRead *.ui setlocal filetype=xml.ui foldmethod=marker
 autocmd BufNewFile,BufRead *.gjs setlocal filetype=javascript
-
-"autocmd BufWritePre *.go :call CocAction('editor.action.organizeImport')
 
 nmap <silent> <leader>n :nohlsearch<cr>
 nmap <silent> <leader>s :set list!<cr>
@@ -116,9 +112,11 @@ let g:lightline = {
       \ 'colorscheme': 'dracula'
       \ }
 
-" FZF mappings
-nnoremap <silent> <leader>of :Files<CR>
-nnoremap <silent> <leader>ob :Buffers<CR>
+" Telescope mappings
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " coc.nvim settings
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -138,27 +136,21 @@ function! s:show_documentation()
   endif
 endfunction
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 nmap <leader>rn <Plug>(coc-rename)
-nmap <leader>ra <Plug>(coc-format)
-nmap <leader>ro :call CocAction('runCommand', 'editor.action.organizeImport')<CR>
 xmap <leader>rf <Plug>(coc-format-selected)
 nmap <leader>rf <Plug>(coc-format-selected)
+nmap <leader>ra <Plug>(coc-format)
+nmap <leader>ro :call CocAction('runCommand', 'editor.action.organizeImport')<CR>
+
+autocmd FileType python nmap <leader>ro :call CocAction('runCommand', 'python.sortImports')<CR>
 
 function! s:tab_completion()
   let info = complete_info(['pum_visible', 'items', 'selected'])
 
   if info.pum_visible && (info.selected >= 0 || len(info.items) == 1)
+    " Accept the menu item if one is selected
     return "\<C-y>"
   endif
-
-  "if pumvisible()
-  "  if !empty(v:completed_item)
-  "    " Accept the menu item if one is selected
-  "    return "\<C-y>"
-  "  endif
-  "endif
 
   if coc#expandableOrJumpable()
     " If the word at the cursor is expandable, then expand it
@@ -169,3 +161,17 @@ function! s:tab_completion()
 endfunction
 
 inoremap <silent><expr> <TAB> <SID>tab_completion()
+inoremap <silent><expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
+
+let g:coc_explorer_global_presets =
+      \ {
+      \   "floating": {
+      \     "position": "floating",
+      \     "floating-position": "center-top",
+      \     "open-action-strategy": "sourceWindow",
+      \     "quit-on-open": v:true,
+      \   }
+      \ }
+
+nnoremap <leader>e :CocCommand explorer --preset floating<CR>
+nnoremap - :CocCommand explorer --preset floating<CR>
