@@ -1,11 +1,4 @@
 {
-  "coc.preferences.rootPatterns": {
-    "setup.py",
-    ".git",
-    ".hg",
-    ".projections.json"
-  },
-
   "suggest.triggerAfterInsertEnter": true,
   "suggest.noselect": true,
   "suggest.enablePreview": true,
@@ -50,5 +43,6 @@
 
   "clangd.enabled": false,
   "clangd.path": "/usr/bin/clangd-10",
-  "clangd.compilationDatabasePath": "."
+  "clangd.compilationDatabasePath": ".",
+  "svelte.enable-ts-plugin": true
 }

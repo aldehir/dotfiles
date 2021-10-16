@@ -16,6 +16,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'dracula/vim'
 Plug 'sirtaj/vim-openscad'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
 call plug#end()
 
 let mapleader = ","
@@ -175,3 +176,10 @@ let g:coc_explorer_global_presets =
 
 nnoremap <leader>e :CocCommand explorer --preset floating<CR>
 nnoremap - :CocCommand explorer --preset floating<CR>
+
+" vim-svelte
+let g:svelte_preprocessor_tags = [
+  \ { 'name': 'ts', 'tag': 'script', 'as': 'typescript' }
+  \ ]
+
+let g:svelte_preprocessors = ['ts']
