@@ -1,5 +1,7 @@
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local cmp_nvim_lsp = require 'cmp_nvim_lsp'
+local lspconfig = require 'lspconfig'
 
 cmp.setup({
   mapping = {
@@ -36,9 +38,7 @@ cmp.setup({
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
-
-local nvim_lsp = require'lspconfig'
+capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 local on_attach = function(client, bufnr)
   local buf_set_keymap = function(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -54,7 +54,7 @@ end
 
 local servers = { 'pyright', 'gopls' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
     flags = {
@@ -63,7 +63,7 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-nvim_lsp.efm.setup {
+lspconfig.efm.setup {
   init_options = {
     documentFormatting = true,
   },
