@@ -9,10 +9,12 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = false,
-    }),
+    ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+    ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+--    ['<CR>'] = cmp.mapping.confirm({
+--      behavior = cmp.ConfirmBehavior.Replace,
+--      select = true,
+--    }),
     ['<Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.confirm()
@@ -35,6 +37,12 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end
   },
+  completion = {
+    completeopt = 'menu,menuone,noinsert',
+  },
+  experimental = {
+    native_menu = false
+  }
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -52,13 +60,20 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 end
 
-local servers = { 'pyright', 'gopls' }
-for _, lsp in ipairs(servers) do
+require 'ltex'
+
+local servers = { 'ansiblels', 'pyright', 'gopls', 'tsserver', 'svelte', 'ltex', 'clangd' }
+for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
     flags = {
       debounce_text_changes = 150,
+    },
+    ansible = {
+      ansible = {
+        useFullyQualifedCollectionNames = true
+      }
     },
   }
 end
@@ -94,8 +109,12 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
     spacing = 4,
   },
   signs = true,
-  underline = false,
+  underline = true,
 
   -- This might cause some performance problems??
   update_in_insert = true,
 })
+
+vim.cmd [[
+autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+]]

@@ -59,7 +59,7 @@ set history=700
 set scrolloff=3
 set cmdheight=2
 set laststatus=2
-set updatetime=300
+set updatetime=250
 set shortmess+=c
 
 set splitbelow
@@ -86,7 +86,7 @@ set nowritebackup
 set nowb
 set noswapfile
 
-set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone,noinsert
 
 autocmd FileType ruby,javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd FileType java,python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
