@@ -62,7 +62,7 @@ end
 
 require 'ltex'
 
-local servers = { 'ansiblels', 'pyright', 'gopls', 'tsserver', 'svelte', 'ltex', 'clangd' }
+local servers = { 'ansiblels', 'pyright', 'gopls', 'tsserver', 'svelte', 'ltex' }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
@@ -95,6 +95,15 @@ lspconfig.efm.setup {
     opts = { noremap = true, silent = true }
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ra', '<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>', opts)
   end
+}
+
+lspconfig.clangd.setup {
+    cmd = { 'clangd', '--background-index', '--compile-commands-dir', '.', '--query-driver=/usr/bin/avr-gcc', },
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    },
 }
 
 local signs = { Error = "", Warning = "", Hint = "", Information = "" }
