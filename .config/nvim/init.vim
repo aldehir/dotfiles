@@ -23,6 +23,8 @@ Plug 'hrsh7th/cmp-path', {'branch': 'main'}
 Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'jvirtanen/vim-hcl'
+Plug 'hashivim/vim-terraform'
 call plug#end()
 
 let mapleader = ","
