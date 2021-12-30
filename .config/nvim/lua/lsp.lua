@@ -60,9 +60,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 end
 
-require 'ltex'
-
-local servers = { 'ansiblels', 'pyright', 'gopls', 'tsserver', 'svelte', 'ltex' }
+local servers = { 'ansiblels', 'pyright', 'gopls', 'tsserver', 'svelte', }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
