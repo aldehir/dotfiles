@@ -1,0 +1,40 @@
+window {
+  border: 1px #44475a solid;
+  background-color: #282a36;
+  font-family: Iosevka, Monospace;
+}
+
+#input {
+  margin: 8px;
+  border: 0px;
+  background-color: #282a36;
+  color: #f8f8f2;
+}
+
+#input.image {
+  color: #f8f8f2;
+}
+
+#input.flat, #input.error, #input.warning,
+#input:active, #input:focus, #input:focused,
+#input:hover, #input:selected {
+  border: 0;
+  outline: 0;
+  box-shadow: 0;
+}
+
+#text {
+  outline: 0;
+}
+
+#text, #entry {
+  color: #f8f8f2;
+}
+
+#entry {
+  padding: 8px;
+}
+
+#entry:selected {
+  background-color: #44475a;
+}
