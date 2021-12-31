@@ -25,7 +25,7 @@ if [[ -e "$HOME/.oh-my-zsh" ]]; then
 fi
 
 # Theme
-[[ -e "$HOME/.theme" && -z "$THEME_SET" ]] && . "$HOME/.theme"
+[[ "$TERM" != "linux" && -z "$TMUX" ]] && . "$HOME/.theme"
 
 # Go
 export GOBIN="$HOME/.local/bin"
