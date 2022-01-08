@@ -76,24 +76,24 @@ for _, lsp in pairs(servers) do
   }
 end
 
-lspconfig.efm.setup {
-  init_options = {
-    documentFormatting = true,
-  },
-  settings = {
-    rootMarkers = {".git/"},
-    languages = {
-      python = {
-        { formatCommand = "black --quiet -", formatStdin = true },
-        { formatCommand = "isort --quiet -", formatStdin = true },
-      }
-    }
-  },
-  on_attach = function(client, bufnr)
-    opts = { noremap = true, silent = true }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ra', '<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>', opts)
-  end
-}
+-- lspconfig.efm.setup {
+--   init_options = {
+--     documentFormatting = true,
+--   },
+--   settings = {
+--     rootMarkers = {".git/"},
+--     languages = {
+--       python = {
+--         { formatCommand = "black --quiet -", formatStdin = true },
+--         { formatCommand = "isort --quiet -", formatStdin = true },
+--       }
+--     }
+--   },
+--   on_attach = function(client, bufnr)
+--     opts = { noremap = true, silent = true }
+--     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ra', '<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>', opts)
+--   end
+-- }
 
 lspconfig.clangd.setup {
     cmd = { 'clangd', '--background-index', '--compile-commands-dir', '.', '--query-driver=/usr/bin/avr-gcc', },
@@ -123,5 +123,5 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 })
 
 vim.cmd [[
-autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float()
 ]]
