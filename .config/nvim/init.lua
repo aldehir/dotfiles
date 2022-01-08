@@ -50,7 +50,7 @@ vim.o.splitright = true
 
 -- Wild menu
 vim.o.wildmenu = true
-vim.opt.wildmode = { list = 'longest' }
+vim.o.wildmode = 'list:longest'
 vim.opt.wildignore = { '*.o', '*~', '*.pyc', 'node_modules/' }
 
 -- Search

@@ -1,3 +1,13 @@
+local packer = require 'packer'
+
+packer.use 'neovim/nvim-lspconfig'
+packer.use { 'hrsh7th/cmp-nvim-lsp', branch = 'main' }
+packer.use { 'hrsh7th/cmp-buffer', branch = 'main' }
+packer.use { 'hrsh7th/cmp-path', branch = 'main' }
+packer.use { 'hrsh7th/nvim-cmp', branch = 'main' }
+packer.use 'L3MON4D3/LuaSnip'
+packer.use 'saadparwaiz1/cmp_luasnip'
+
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local cmp_nvim_lsp = require 'cmp_nvim_lsp'
