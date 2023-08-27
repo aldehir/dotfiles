@@ -61,4 +61,9 @@ if [[ -e "$HOME/.pyenv" ]]; then
   [[ -n "$ZSH" ]] && plugins+=(pyenv)
 fi
 
+# Configure asdf
+if [[ -e "$HOME/.asdf" ]]; then
+  [[ -n "$ZSH" ]] && plugins+=(asdf)
+fi
+
 [[ -n "$ZSH" ]] && . $ZSH/oh-my-zsh.sh
