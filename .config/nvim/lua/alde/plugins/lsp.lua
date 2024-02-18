@@ -125,6 +125,11 @@ return function(lazyplugin, lazyopts)
       },
   }
 
+  lspconfig.emmet_language_server.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+  }
+
   local signs = { Error = "", Warning = "", Hint = "", Information = "" }
   for type, icon in pairs(signs) do
     local hl = "LspDiagnosticsSign" .. type
@@ -160,5 +165,40 @@ return function(lazyplugin, lazyopts)
       require("go.format").goimport()
     end,
     group = format_snyc_grp,
+  })
+
+  lspconfig.rust_analyzer.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      ["rust-analyzer"] = {
+        imports = {
+          granularity = {
+            group = "module",
+          },
+          prefix = "self",
+        },
+        cargo = {
+          buildScripts = {
+            enable = true,
+          },
+          procMacro = {
+            enable = true,
+          },
+        },
+      }
+    },
+  })
+
+  lspconfig.yamlls.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      yaml = {
+        schemas = {
+          kubernetes = "*.yaml",
+        }
+      }
+    }
   })
 end

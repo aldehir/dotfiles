@@ -21,7 +21,7 @@ if [[ -e "$HOME/.oh-my-zsh" ]]; then
   ZSH_THEME="robbyrussell"
   DISABLE_AUTO_UPDATE="true"
 
-  plugins=(vi-mode git tmux colored-man-pages fasd)
+  plugins=(vi-mode git tmux colored-man-pages fasd ut2u)
 fi
 
 # Theme
@@ -64,6 +64,15 @@ fi
 # Configure asdf
 if [[ -e "$HOME/.asdf" ]]; then
   [[ -n "$ZSH" ]] && plugins+=(asdf)
+  [[ -e "$HOME/.asdf/plugins/golang" ]] && . $HOME/.asdf/plugins/golang/set-env.zsh
 fi
 
+# Configure cargo/rust
+[[ -e "$HOME/.cargo" ]] && . "$HOME/.cargo/env"
+
 [[ -n "$ZSH" ]] && . $ZSH/oh-my-zsh.sh
+
+# Disable shared history
+unsetopt share_history
+
+source ~/.secrets

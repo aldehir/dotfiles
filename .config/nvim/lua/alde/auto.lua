@@ -5,6 +5,7 @@ autocmd FileType ruby,javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd FileType javascript,typescript,json setlocal textwidth=120
 autocmd Filetype go setlocal tabstop=4 softtabstop=4 shiftwidth=0 noexpandtab
 autocmd Filetype uc setlocal tabstop=4 softtabstop=4 shiftwidth=0
+autocmd Filetype dockerfile setlocal tw=0
 ]]
 
 vim.cmd [[

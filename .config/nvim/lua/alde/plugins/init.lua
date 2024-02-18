@@ -68,4 +68,11 @@ require("lazy").setup({
     },
   },
 
+  -- Ansible
+  {
+    'pearofducks/ansible-vim',
+    init = function()
+      vim.g.ansible_unindent_after_newline = 1
+    end,
+  }
 })
