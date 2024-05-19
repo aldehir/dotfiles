@@ -3,7 +3,7 @@
 vim.o.encoding = 'utf8'
 vim.o.fileformats = 'unix,dos,mac'
 
-vim.v.mapleader = ','
+-- vim.v.mapleader = ','
 vim.g.mapleader = ','
 
 vim.o.hidden = true
@@ -71,4 +71,5 @@ vim.o.swapfile = false
 vim.opt.completeopt = { 'menu', 'menuone', 'noinsert' }
 
 -- Clipboard
-vim.opt.clipboard = 'unnamedplus'
+-- TODO: This is breaking TMUX
+-- vim.opt.clipboard = 'unnamedplus'

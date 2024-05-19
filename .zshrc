@@ -3,7 +3,7 @@
 # Set up some reasonable defaults
 export LANG=en_US.UTF-8
 
-export PATH="$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export MANPATH="$HOME/.local/man:/usr/local/man:$MANPATH"
 
 if command -v nvim 1>/dev/null; then
@@ -57,6 +57,8 @@ fi
 # Configure pyenv
 if [[ -e "$HOME/.pyenv" ]]; then
   export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
 
   [[ -n "$ZSH" ]] && plugins+=(pyenv)
 fi
@@ -74,5 +76,10 @@ fi
 
 # Disable shared history
 unsetopt share_history
+
+# Set gpg tty
+export GPG_TTY=$(tty)
+
+export PICO_SDK_PATH=$HOME/dev/rpi-pico/pico-sdk
 
 source ~/.secrets
